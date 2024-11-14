@@ -2,16 +2,82 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+.ProseMirror {
+  outline: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+.ProseMirror > * + * {
+  margin-top: 0.75em;
+}
+
+.ProseMirror ul,
+.ProseMirror ol {
+  padding: 0 1rem;
+}
+
+.ProseMirror h1 {
+  font-size: 2em;
+  font-weight: bold;
+  color: white;
+}
+
+.ProseMirror h2 {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: white;
+}
+
+.ProseMirror p {
+  color: #e4e4e7;
+}
+
+.ProseMirror code {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #e4e4e7;
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+}
+
+.ProseMirror pre {
+  background: #18181b;
+  color: #e4e4e7;
+  font-family: 'JetBrainsMono', monospace;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+}
+
+.ProseMirror pre code {
+  color: inherit;
+  padding: 0;
+  background: none;
+  font-size: 0.8rem;
+}
+
+.ProseMirror img {
+  max-width: 100%;
+  height: auto;
+}
+
+.ProseMirror blockquote {
+  padding-left: 1rem;
+  border-left: 2px solid rgba(255, 255, 255, 0.2);
+  color: #a1a1aa;
+}
+
+.ProseMirror hr {
+  border: none;
+  border-top: 2px solid rgba(255, 255, 255, 0.1);
+  margin: 2rem 0;
+}
+
+.ProseMirror ul li,
+.ProseMirror ol li {
+  color: #e4e4e7;
+}
+
+:root {
+  --background: #0a0a0a;
+  --foreground: #ededed;
 }
 
 body {

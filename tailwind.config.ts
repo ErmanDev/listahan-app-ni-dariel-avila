@@ -12,7 +12,16 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      typography: {
+        DEFAULT: {
+          css: {
+            maxWidth: '100%',
+          },
+        },
+      },
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/typography'),
+  ],
 } satisfies Config;
