@@ -38,7 +38,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-zinc-950 text-white">
       {/* Hero Section */}
-      <div className="relative isolate px-6 pt-14 lg:px-8">
+      <div className="min-h-screen relative isolate px-6 pt-14 lg:px-8 flex items-center justify-center">
         <div className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80">
           <div className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-zinc-800 to-zinc-900 opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"></div>
         </div>
@@ -67,9 +67,11 @@ export default function Home() {
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Features Section */}
-        <div id="features" className="mx-auto max-w-5xl px-6 sm:mt-20 lg:px-8 mb-36">
+
+    {/* Features Section */}
+    <div id="features" className="min-h-screen mx-auto max-w-5xl px-6 sm:mt-20 lg:px-8">
           <div className="mx-auto max-w-2xl lg:text-center mb-16">
             <h2 className="text-2xl font-semibold leading-7 text-white">Features</h2>
             <p className="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">
@@ -95,7 +97,7 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Footer */}
+          {/* Footer */}
       <footer className="bg-zinc-950 text-zinc-400 py-12 px-6">
         <div className="max-w-7xl mx-auto">
          
@@ -143,8 +145,6 @@ export default function Home() {
           </div>
         </div>
       </footer>
-      </div>
-
 
       
     </div>
