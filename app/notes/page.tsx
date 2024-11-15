@@ -1,10 +1,9 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
-import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { deleteNoteFromStorage, loadNotes, saveNotes } from '../../services/localStorage';
 import { Note } from '../../types/note';
-import { loadNotes, saveNote, saveNotes, deleteNoteFromStorage } from '../../services/localStorage';
 
 // Dynamic import of components
 const Editor = dynamic(() => import('../../components/Editor'), { ssr: false });
@@ -216,17 +215,17 @@ export default function NotesApp() {
       } bg-zinc-900 border-r border-zinc-800 transition-all duration-300 flex flex-col`}>
         <div className="p-4 border-b border-zinc-800">
           <div className="flex items-center gap-4 mb-4">
-            <h1 className="text-xl font-semibold text-white">Notes</h1>
+            <h1 className="text-xl font-semibold text-white">Listahan</h1>
             <button
               onClick={createNewNote}
               className="ml-auto px-3 py-1.5 bg-zinc-800 text-white rounded-lg hover:bg-zinc-700 transition-colors text-sm"
             >
-              New Note
+              Create
             </button>
           </div>
           <input
             type="text"
-            placeholder="Search notes..."
+            placeholder="Search listahan..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full px-3 py-2 bg-zinc-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-600"
@@ -235,7 +234,7 @@ export default function NotesApp() {
         <div className="flex-1 overflow-y-auto">
           {filteredNotes.length === 0 ? (
             <div className="p-4 text-zinc-400 text-center">
-              {searchQuery ? 'No notes found' : 'No notes yet'}
+              {searchQuery ? 'No listahan found' : 'No listahan yet'}
             </div>
           ) : (
             <div className="divide-y divide-zinc-800">
@@ -280,7 +279,7 @@ export default function NotesApp() {
                 className="flex-1 bg-transparent text-xl font-semibold text-white focus:outline-none"
                 placeholder="Note title"
               />
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 ml-[-100px] md:ml-0">
                 <button
                   onClick={handleSaveNote}
                   disabled={!hasUnsavedChanges}
@@ -315,13 +314,13 @@ export default function NotesApp() {
           </>
         ) : (
           <div className="flex flex-col items-center justify-center h-full text-center p-4">
-            <h2 className="text-xl font-semibold text-white mb-2">No note selected</h2>
-            <p className="text-zinc-400 mb-4">Select a note from the sidebar or create a new one</p>
+            <h2 className="text-xl font-semibold text-white mb-2">No listahan selected</h2>
+            <p className="text-zinc-400 mb-4">Select a listahan from the sidebar or create a new one</p>
             <button
               onClick={createNewNote}
               className="px-4 py-2 bg-zinc-800 text-white rounded-lg hover:bg-zinc-700 transition-colors"
             >
-              Create New Note
+              Create New Listahan
             </button>
           </div>
         )}

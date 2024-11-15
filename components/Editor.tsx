@@ -24,7 +24,10 @@ const modules = {
     [{ list: 'ordered' }, { list: 'bullet' }],
     [{ align: [] }],
     ['clean']
-  ]
+  ],
+  clipboard: {
+    matchVisual: false
+  }
 };
 
 const formats = [
@@ -63,6 +66,7 @@ export default function Editor({
         modules={modules}
         formats={formats}
         placeholder={placeholder}
+        preserveWhitespace={true}
         className="prose prose-invert max-w-none h-full"
       />
       <style jsx global>{`
@@ -72,6 +76,7 @@ export default function Editor({
           border: none !important;
           border-bottom-left-radius: 0.5rem;
           border-bottom-right-radius: 0.5rem;
+          background-color: rgb(24 24 27) !important;
         }
         .ql-toolbar {
           border: none !important;
@@ -92,7 +97,7 @@ export default function Editor({
         .ql-toolbar .ql-stroke {
           stroke: rgb(161 161 170) !important;
         }
-        .ql-toolbar button:hover .ql-stroke {
+        .ql-toolbar .ql-stroke:hover {
           stroke: white !important;
         }
         .ql-toolbar .ql-active .ql-stroke {
@@ -101,11 +106,19 @@ export default function Editor({
         .ql-toolbar .ql-fill {
           fill: rgb(161 161 170) !important;
         }
-        .ql-toolbar button:hover .ql-fill {
+        .ql-toolbar .ql-fill:hover {
           fill: white !important;
         }
         .ql-toolbar .ql-active .ql-fill {
           fill: white !important;
+        }
+        .ql-editor {
+          color: rgb(212 212 216) !important;
+          background-color: rgb(24 24 27) !important;
+        }
+        .ql-editor.ql-blank::before {
+          color: rgb(161 161 170) !important;
+          font-style: normal !important;
         }
         .ql-snow.ql-toolbar button:hover,
         .ql-snow .ql-toolbar button:hover,
@@ -122,15 +135,6 @@ export default function Editor({
         .ql-snow.ql-toolbar .ql-picker-item.ql-selected,
         .ql-snow .ql-toolbar .ql-picker-item.ql-selected {
           color: white !important;
-        }
-        .ql-editor {
-          padding: 1.5rem;
-          min-height: calc(100vh - 12rem);
-          color: white;
-        }
-        .ql-editor.ql-blank::before {
-          color: rgb(161 161 170);
-          font-style: normal;
         }
       `}</style>
     </div>

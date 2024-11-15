@@ -56,7 +56,7 @@ export default function Home() {
                 href="/notes" 
                 className="rounded-lg bg-white px-6 py-3 text-sm font-semibold text-black shadow-sm hover:bg-zinc-200 transition-all duration-200"
               >
-                Try Now
+                Try Listahan Now
               </Link>
               <a 
                 href="#features" 
