@@ -116,15 +116,17 @@ export default function Editor({
 
     // Add touch event handling for checkboxes
     const handleCheckboxClick = (event: Event) => {
-      event.preventDefault();
-      event.stopPropagation();
-      
       const target = event.target as HTMLElement;
       const listItem = target.closest('li[data-list]');
       
       if (listItem) {
-        // Prevent focus to avoid keyboard popup
-        if (document.activeElement instanceof HTMLElement) {
+        // Only prevent default and stop propagation for checkbox interactions
+        event.preventDefault();
+        event.stopPropagation();
+        
+        // Only blur if we're interacting with a checkbox
+        const isCheckboxClick = target.closest('.ql-editor li[data-list="checked"], .ql-editor li[data-list="unchecked"]');
+        if (isCheckboxClick && document.activeElement instanceof HTMLElement) {
           document.activeElement.blur();
         }
         
@@ -144,9 +146,11 @@ export default function Editor({
 
     const editor = document.querySelector('.ql-editor');
     if (editor) {
+      // Only prevent default touch behavior for checkbox interactions
       editor.addEventListener('touchstart', (e) => {
         const target = e.target as HTMLElement;
-        if (target.closest('li[data-list]')) {
+        const isCheckbox = target.closest('li[data-list="checked"], li[data-list="unchecked"]');
+        if (isCheckbox) {
           e.preventDefault();
         }
       }, { passive: false });
@@ -159,7 +163,8 @@ export default function Editor({
       if (editor) {
         editor.removeEventListener('touchstart', (e) => {
           const target = e.target as HTMLElement;
-          if (target.closest('li[data-list]')) {
+          const isCheckbox = target.closest('li[data-list="checked"], li[data-list="unchecked"]');
+          if (isCheckbox) {
             e.preventDefault();
           }
         });
