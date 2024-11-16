@@ -24,6 +24,28 @@ const customEditorStyles = `
 .ql-snow .ql-picker-label:hover::before {
   color: #ffd700 !important;
 }
+
+/* Mobile-specific styles */
+@media (max-width: 768px) {
+  .ql-editor .ql-checkbox {
+    min-height: 24px;
+    min-width: 24px;
+    margin: 4px;
+    cursor: pointer;
+  }
+  
+  .ql-editor li[data-list="checked"],
+  .ql-editor li[data-list="unchecked"] {
+    pointer-events: auto !important;
+  }
+  
+  .ql-editor li[data-list="checked"]::before,
+  .ql-editor li[data-list="unchecked"]::before {
+    min-width: 24px;
+    min-height: 24px;
+    margin: 4px;
+  }
+}
 `;
 
 // Dynamic import of ReactQuill to avoid SSR issues
@@ -54,6 +76,17 @@ const modules = {
   ],
   clipboard: {
     matchVisual: false
+  },
+  keyboard: {
+    bindings: {
+      'list autofill': {
+        prefix: /^\s*\[\s?\]\s*$/,
+        handler() {
+          // Prevent default behavior
+          return true;
+        }
+      }
+    }
   }
 };
 
@@ -80,6 +113,35 @@ export default function Editor({
 
   useEffect(() => {
     setMounted(true);
+
+    // Add touch event handling for checkboxes
+    const handleCheckboxClick = (event: Event) => {
+      const target = event.target as HTMLElement;
+      const listItem = target.closest('li[data-list]');
+      
+      if (listItem) {
+        const currentState = listItem.getAttribute('data-list');
+        const newState = currentState === 'checked' ? 'unchecked' : 'checked';
+        listItem.setAttribute('data-list', newState);
+        
+        // Trigger change event to save the state
+        const changeEvent = new Event('change', { bubbles: true });
+        listItem.dispatchEvent(changeEvent);
+      }
+    };
+
+    const editor = document.querySelector('.ql-editor');
+    if (editor) {
+      editor.addEventListener('touchend', handleCheckboxClick);
+      editor.addEventListener('click', handleCheckboxClick);
+    }
+
+    return () => {
+      if (editor) {
+        editor.removeEventListener('touchend', handleCheckboxClick);
+        editor.removeEventListener('click', handleCheckboxClick);
+      }
+    };
   }, []);
 
   if (!mounted) {
