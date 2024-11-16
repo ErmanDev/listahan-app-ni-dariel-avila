@@ -116,33 +116,58 @@ export default function Editor({
 
     // Add touch event handling for checkboxes
     const handleCheckboxClick = (event: Event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      
       const target = event.target as HTMLElement;
       const listItem = target.closest('li[data-list]');
       
       if (listItem) {
+        // Prevent focus to avoid keyboard popup
+        if (document.activeElement instanceof HTMLElement) {
+          document.activeElement.blur();
+        }
+        
         const currentState = listItem.getAttribute('data-list');
         const newState = currentState === 'checked' ? 'unchecked' : 'checked';
         listItem.setAttribute('data-list', newState);
         
-        // Trigger change event to save the state
-        const changeEvent = new Event('change', { bubbles: true });
-        listItem.dispatchEvent(changeEvent);
+        // Get the editor instance
+        const editor = document.querySelector('.ql-editor');
+        if (editor) {
+          // Force update the content to maintain the checkbox state
+          const content = editor.innerHTML;
+          onChange(content);
+        }
       }
     };
 
     const editor = document.querySelector('.ql-editor');
     if (editor) {
+      editor.addEventListener('touchstart', (e) => {
+        const target = e.target as HTMLElement;
+        if (target.closest('li[data-list]')) {
+          e.preventDefault();
+        }
+      }, { passive: false });
+      
       editor.addEventListener('touchend', handleCheckboxClick);
       editor.addEventListener('click', handleCheckboxClick);
     }
 
     return () => {
       if (editor) {
+        editor.removeEventListener('touchstart', (e) => {
+          const target = e.target as HTMLElement;
+          if (target.closest('li[data-list]')) {
+            e.preventDefault();
+          }
+        });
         editor.removeEventListener('touchend', handleCheckboxClick);
         editor.removeEventListener('click', handleCheckboxClick);
       }
     };
-  }, []);
+  }, [onChange]);
 
   if (!mounted) {
     return <div className="h-full w-full bg-zinc-900 animate-pulse" />;
